@@ -6,27 +6,29 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
-    const message = formData.get("message") as string;
+    const message = formData.get("message") as string || "";
     const file = formData.get("image") as File | null;
 
     const model = genAI.getGenerativeModel({ 
       model: "gemini-1.5-flash",
-      systemInstruction: "You are the personal AI Math Professor for Mahamudul Hasan (ADUST Student). Solve math problems from text or images. Use LaTeX ($...$ and $$...$$). Be professional and fast."
+      systemInstruction: "You are the personal Math Assistant for Mahamudul Hasan (ADUST). Solve problems from text or images step-by-step using LaTeX."
     });
 
-    let result;
     if (file) {
-      const buffer = await file.arrayBuffer();
-      const imagePart = {
-        inlineData: { data: Buffer.from(buffer).toString("base64"), mimeType: file.type },
-      };
-      result = await model.generateContent([message || "Solve this math.", imagePart]);
-    } else {
-      result = await model.generateContent(message);
+      const arrayBuffer = await file.arrayBuffer();
+      const base64Data = Buffer.from(arrayBuffer).toString("base64");
+      
+      const result = await model.generateContent([
+        message || "Solve the math in this image",
+        { inlineData: { data: base64Data, mimeType: file.type } }
+      ]);
+      return NextResponse.json({ text: result.response.text() });
     }
 
+    const result = await model.generateContent(message);
     return NextResponse.json({ text: result.response.text() });
-  } catch (error) {
-    return NextResponse.json({ error: "Server Error" }, { status: 500 });
+  } catch (error: any) {
+    console.error(error);
+    return NextResponse.json({ error: "Build and API working, but check Key." }, { status: 500 });
   }
 }
