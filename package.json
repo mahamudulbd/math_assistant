@@ -1,11 +1,12 @@
 {
-  "name": "mahamudul-advanced-math-ai",
-  "version": "1.1.0",
+  "name": "mahamudul-math-pro",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
@@ -16,12 +17,9 @@
     "react-markdown": "^9.0.1",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
-    "katex": "^0.16.11",
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^2.5.2"
+    "katex": "^0.16.11"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.15",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
