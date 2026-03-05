@@ -1,13 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   typescript: {
-    // বিল্ড করার সময় টাইপ এরর থাকলেও সে এগিয়ে যাবে
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: true, // এরর থাকলেও বিল্ড হবে
   },
   eslint: {
-    // বিল্ডের সময় লিন্টিং এরর ইগনোর করবে
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: true, // লিন্টিং এরর ইগনোর করবে
   },
 };
 
